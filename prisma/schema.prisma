@@ -5,29 +5,29 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url  	    = env("DATABASE_URL")
+  // url  	    = env("DATABASE_URL")
 }
 
 model UserDetails {
-  id String @id @default(uuid())
+  id String @id @unique @default(uuid())
   fullname String
   email String @unique
   telephone String
   observations String
 
-  scheduled Schedule @relation(fields: [scheduled_id], references:[id])
-  scheduled_id String
+  // scheduled Schedule @relation(fields: [scheduled_id], references:[id])
+  // scheduled_id String
 }
 
 model Service {
-  id String @id @default(uuid())
+  id String @id @unique @default(uuid())
   name String
   description String
   duration String
   price Decimal @db.Decimal(10,2)
 
   professional Stylist @relation(fields: [stylist_id], references:[id])
-  stylist_id String
+  stylist_id String @unique
 
   @@map("services")
 }
@@ -38,8 +38,8 @@ model Stylist {
   specialistIn String
   description String
 
-  service Service @relation(fields: [service_id], references: [id])
-  service_id String
+  // service Service @relation(fields: [service_id], references: [id])
+  // service_id String @unique
   
   appointments Appointment[]
 
@@ -50,8 +50,8 @@ model Schedule {
   id String @id @default(uuid())
   day DateTime
   
-  user_id UserDetails @relation(fields: [user_id], references:[id])
-  user_id String
+  // userdata UserDetails @relation(fields: [user_id], references:[id])
+  // user_id String
 }
 
 model Appointment {
@@ -68,4 +68,6 @@ model Appointment {
 
   service Service @relation(fields: [service_id], references:[id])
   service_id String 
+
+  @@map("appointments")
 }
