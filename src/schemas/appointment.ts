@@ -16,8 +16,7 @@ const stylistSchema = z.object({
 });
 
 const dateTimeSchema = z.object({
-  date: z.date(),
-  time: z.date()
+  date: z.iso.datetime(),
 });
 
 const userDetailsSchemas = z.object({
