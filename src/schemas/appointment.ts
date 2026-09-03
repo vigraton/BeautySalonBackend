@@ -37,7 +37,7 @@ type Step1 = z.infer<typeof serviceSchema>;
 type Step2 = z.infer<typeof stylistSchema>;
 type Step3 = z.infer<typeof dateTimeSchema>;
 type Step4 = z.infer<typeof userDetailsSchemas>;
-type AppointmentType = z.infer<typeof appointmentSchema>;
+type AppointmentSchema = z.infer<typeof appointmentSchema>;
 
 export {
   serviceSchema,
@@ -49,5 +49,5 @@ export {
   userDetailsSchemas,
   type Step4,
   appointmentSchema,
-  type AppointmentType,
+  type AppointmentSchema,
 };
