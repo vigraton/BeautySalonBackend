@@ -22,28 +22,24 @@ async function seeder() {
 
     const services = [
       {
-        id: 1,
         name: "Tratamento capilar",
         description: "Corte, lavagem, hidratação e estilização",
         duration: "45 minutos",
         price: 100.0,
       },
       {
-        id: 2,
         name: "Pedicure",
         description: "Tratamento e unhas, esfoliação e massagem",
         duration: "1 hora",
         price: 30.0,
       },
       {
-        id: 3,
         name: "Manicure",
         description: "Cuidado com acutícula, unhas postiças",
         duration: "30 minutos",
         price: 25.0,
       },
       {
-        id: 4,
         name: "Glow facial",
         description: "Limpeza profunda, esfoliação e hidratação",
         duration: "40 minutos",
@@ -51,12 +47,46 @@ async function seeder() {
       },
     ];
 
-    await prisma.stylists.upsert({ data: stylists });
-    await prisma.services.upsert({ data: services });
+    await prisma.$transaction(
+      stylists.map((stylist) =>
+        prisma.stylist.upsert({
+          where: { name: stylist.name },
+          update: {
+            name: stylist.name,
+            specialistIn: stylist.specialistIn,
+            description: stylist.description,
+          },
+          create: {
+            name: stylist.name,
+            specialistIn: stylist.specialistIn,
+            description: stylist.description,
+          },
+        }),
+      ),
+    );
+
+    await prisma.$transaction(
+      services.map((service) =>
+        prisma.service.upsert({
+          where: { name: service.name },
+          update: {
+            name: service.name,
+            description: service.description,
+            duration: service.duration,
+            price: service.price,
+          },
+          create: {
+            name: service.name,
+            description: service.description,
+            duration: service.duration,
+            price: service.price,
+          },
+        }),
+      ),
+    );
 
     console.log("[DATABASE] Seeds planted <3");
     process.exit(0);
-    
   } catch (error) {
     console.log("[DATABASE] Could not plant seeds: ", error);
     process.exit(1);
