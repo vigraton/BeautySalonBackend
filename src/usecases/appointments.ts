@@ -2,31 +2,23 @@ import prisma from "../lib/prisma.js";
 import type { AppointmentSchema } from "../schemas/appointment.js";
 
 export default class AppointmentUsecase {
-  public async save(data: AppointmentSchema) {
-    console.log("APPOINTMENT USECASE BODY: ", data);
+  public async save(newBooking: AppointmentSchema) {
+    console.log("APPOINTMENT USECASE BODY: ", newBooking);
 
-    const newAppointment = await prisma.appointment.create({
+    const createdBooking = await prisma.appointment.create({
       data: {
-        step1: {
-          id_service: data.step1.id,
-        },
-        step2: {
-          id_stylist: data.step2.id,
-        },
-        step3: {
-          date: data.step3.date,
-        },
-        step4: {
-          fullname: data.step4.fullname,
-          email: data.step4.email,
-          telephone: data.step4.telephone,
-          observations: data.step4.observations,
-        },
+        service_id: newBooking.step1.id,
+        stylist_id: newBooking.step2.id,
+        schedule_id: newBooking.step3.date,
+        user_id: newBooking.step4.id,
       },
     });
+    // Dentro de data tem que estar espelhado exatamente como está no schema.prisma de Appointment,
+    // ou seja, user_id, schedule_id, stylist_id e service_id. O prisma não sabe o que é
+    // "step1" ou "step2", isso é apenas um  agrupamento do zod.
 
-    console.log("APPOINTMENT USECASE RESPONSE: ", newAppointment);
+    console.log("APPOINTMENT USECASE RESPONSE: ", createdBooking);
 
-    return newAppointment;
+    return createdBooking;
   }
 }
