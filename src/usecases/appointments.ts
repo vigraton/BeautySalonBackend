@@ -27,10 +27,6 @@ export default class AppointmentUsecase {
           },
         },
       },
-      include: {
-        schedule: true,
-        userDetails: true,
-      },
     });
 
     // Dentro de data tem que estar espelhado exatamente como está no schema.prisma de Appointment,
