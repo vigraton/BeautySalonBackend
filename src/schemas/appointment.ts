@@ -20,7 +20,7 @@ const dateTimeSchema = z.object({
 });
 
 const userDetailsSchemas = z.object({
-  id: z.string(),
+  // id: z.string(),
   fullname: z.string(),
   email: z.email(),
   telephone: z.string(),
