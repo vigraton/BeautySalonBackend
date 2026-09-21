@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma.js";
 import type { AppointmentSchema } from "../schemas/appointment.js";
+import ResponseHandler from "../utils/response-handler.js";
 
 export default class AppointmentUsecase {
   public async save(newBooking: AppointmentSchema) {
@@ -29,12 +30,15 @@ export default class AppointmentUsecase {
       },
     });
 
+    console.log("APPOINTMENT USECASE RESPONSE: ", createdBooking);
+    
     // Dentro de data tem que estar espelhado exatamente como está no schema.prisma de Appointment,
     // ou seja, user_id, schedule_id, stylist_id e service_id. O prisma não sabe o que é
     // "step1" ou "step2", isso é apenas um  agrupamento do zod.
 
-    console.log("APPOINTMENT USECASE RESPONSE: ", createdBooking);
 
-    return createdBooking;
+    return ResponseHandler.toSuccess(201, {
+      message: "Agendamento criado!"
+    })
   }
 }
