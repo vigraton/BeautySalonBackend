@@ -1,4 +1,5 @@
-import { z } from "zod";
+import type { FastifySchema } from "fastify";
+import { object, z } from "zod";
 
 const serviceSchema = z.object({
   id: z.string(),
@@ -34,6 +35,16 @@ const appointmentSchema = z.object({
   step4: userDetailsSchemas,
 });
 
+const FASTIFY_CREATE_APPOINTMENT_SCHEMA = {
+  schema: {
+    body: appointmentSchema,
+    response: {
+      400: object({ error: z.string() }),
+      500: object({ error: z.string() }),
+    },
+  } as FastifySchema
+};
+
 type Step1 = z.infer<typeof serviceSchema>;
 type Step2 = z.infer<typeof stylistSchema>;
 type Step3 = z.infer<typeof dateTimeSchema>;
@@ -51,4 +62,5 @@ export {
   type Step4,
   appointmentSchema,
   type AppointmentSchema,
+  FASTIFY_CREATE_APPOINTMENT_SCHEMA
 };
