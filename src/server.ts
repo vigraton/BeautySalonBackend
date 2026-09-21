@@ -1,17 +1,16 @@
 import Fastify from "fastify";
+import { AppointmentRoutes } from "./routes/routes.js";
 
-const fastify = Fastify({ logger: true });
+const app = Fastify({ logger: true });
 
-fastify.get("/", async () => {
-  return { hello: "world" };
-});
+app.register(AppointmentRoutes, {prefix: "/appointments"})
 
 async function start() {
   try {
-    await fastify.listen({ port: 3000, host: "0.0.0.0" });
+    await app.listen({ port: 3000, host: "0.0.0.0" });
     console.log("We are running! http://localhost:3000")
   } catch (error) {
-    fastify.log.error(error);
+    app.log.error(error);
     process.exit(1);
   }
 }
