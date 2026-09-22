@@ -12,7 +12,7 @@ model UserDetails {
   fullname     String
   email        String @unique
   telephone    String
-  observations String
+  observations String?
 
   appointments Appointment[]
 
