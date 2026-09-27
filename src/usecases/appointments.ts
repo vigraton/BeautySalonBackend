@@ -4,8 +4,6 @@ import ResponseHandler from "../utils/response-handler.js";
 
 export default class AppointmentUsecase {
   public async save(newBooking: AppointmentSchema) {
-    console.log("APPOINTMENT USECASE BODY: ", newBooking);
-
     const createdBooking = await prisma.appointment.create({
       data: {
         service: {
@@ -28,17 +26,24 @@ export default class AppointmentUsecase {
           },
         },
       },
+      include: {
+        service: true,
+        stylist: true,
+        schedule: true,
+        userDetails: true,
+      } // devolve no body tudo o que o usuário registrou >w< super fofin
     });
 
-    console.log("APPOINTMENT USECASE RESPONSE: ", createdBooking);
-    
+    // Por padrão o prisma retorna os campos do próprio Appointment, não os resgistros
+    // relacionados, por isso o include é necessário.
+
     // Dentro de data tem que estar espelhado exatamente como está no schema.prisma de Appointment,
     // ou seja, user_id, schedule_id, stylist_id e service_id. O prisma não sabe o que é
     // "step1" ou "step2", isso é apenas um  agrupamento do zod.
 
-
     return ResponseHandler.toSuccess(201, {
-      message: "Agendamento criado!"
-    })
+      message: "Agendamento criado!",
+      createdBooking
+    });
   }
 }
