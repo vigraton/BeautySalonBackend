@@ -1,5 +1,6 @@
 import "dotenv/config";
 import Fastify from "fastify";
+import corsPlugin from "./plugins/cors.js";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import {
   serializerCompiler,
@@ -13,6 +14,8 @@ const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+await app.register(corsPlugin)
 
 app.register(AppointmentRoutes, { prefix: "/appointments" });
 app.register(ServiceRoutes, { prefix: "/services" });
