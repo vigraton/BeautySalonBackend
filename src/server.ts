@@ -1,18 +1,25 @@
 import "dotenv/config";
 import Fastify from "fastify";
+import corsPlugin from "./plugins/cors.js";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { AppointmentRoutes } from "./routes/routes.js";
+import { AppointmentRoutes } from "./routes/appointment.js";
+import { ServiceRoutes } from "./routes/services.js";
+import { StylistRoutes } from "./routes/stylists.js";
 
 const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
+await app.register(corsPlugin)
+
 app.register(AppointmentRoutes, { prefix: "/appointments" });
+app.register(ServiceRoutes, { prefix: "/services" });
+app.register(StylistRoutes, { prefix: "/stylists" });
 
 async function start() {
   try {
