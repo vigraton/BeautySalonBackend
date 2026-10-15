@@ -9,6 +9,7 @@ import {
 import { AppointmentRoutes } from "./routes/appointment.js";
 import { ServiceRoutes } from "./routes/services.js";
 import { StylistRoutes } from "./routes/stylists.js";
+import { TimetableRoutes } from "./routes/timetable.js";
 
 const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -20,6 +21,7 @@ await app.register(corsPlugin)
 app.register(AppointmentRoutes, { prefix: "/appointments" });
 app.register(ServiceRoutes, { prefix: "/services" });
 app.register(StylistRoutes, { prefix: "/stylists" });
+app.register(TimetableRoutes, {prefix: "/timetable"})
 
 async function start() {
   try {
