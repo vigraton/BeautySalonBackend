@@ -10,6 +10,8 @@
     "types": ["node"],
     // and npm install -D @types/node
 
+    "typeRoots": ["./node_modules/@types"],
+
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,

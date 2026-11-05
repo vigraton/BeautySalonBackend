@@ -1,29 +1,30 @@
 import type { FastifySchema } from "fastify";
-import { object, z } from "zod";
+import { z } from "zod";
 
 const serviceSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  duration: z.string(),
-  price: z.string(),
+  id: z.string().nonempty(),
+  name: z.string().nonempty(),
+  description: z.string().nonempty(),
+  duration: z.string().nonempty(),
+  price: z.string().nonempty(),
 });
 
 const stylistSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  specialistIn: z.string(),
-  description: z.string(),
+  id: z.string().nonempty(),
+  name: z.string().nonempty(),
+  specialistIn: z.string().nonempty(),
+  description: z.string().nonempty(),
 });
 
 const dateTimeSchema = z.object({
-  date: z.iso.datetime(),
+  day: z.iso.date().nonempty("Escolha uma data"),
+  time: z.iso.time({ precision: -1 }).nonempty("Escolha um horário"),
 });
 
 const userDetailsSchemas = z.object({
-  fullname: z.string(),
-  email: z.email(),
-  telephone: z.string(),
+  fullname: z.string().nonempty("Informe seu nome completo"),
+  email: z.email().nonempty("Informe um email válido"),
+  telephone: z.string().nonempty("Informe um telefone válido"),
   observations: z.string().optional(),
 });
 
@@ -38,10 +39,10 @@ const FASTIFY_CREATE_APPOINTMENT_SCHEMA = {
   schema: {
     body: appointmentSchema,
     response: {
-      400: object({ error: z.string() }),
-      500: object({ error: z.string() }),
+      400: z.object({ error: z.string() }),
+      500: z.object({ error: z.string() }),
     },
-  } as FastifySchema
+  } as FastifySchema,
 };
 
 type Step1 = z.infer<typeof serviceSchema>;
@@ -61,5 +62,5 @@ export {
   type Step4,
   appointmentSchema,
   type AppointmentSchema,
-  FASTIFY_CREATE_APPOINTMENT_SCHEMA
+  FASTIFY_CREATE_APPOINTMENT_SCHEMA,
 };
