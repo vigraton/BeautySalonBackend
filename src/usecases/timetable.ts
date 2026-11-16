@@ -4,43 +4,43 @@ import ResponseHandler from "../utils/response-handler.js";
 export const timetable: Timetable[] = [
   {
     time: "09:00",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "10:00",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "11:00",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "12:00",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "13:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "14:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "15:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "16:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "17:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
   {
     time: "18:30",
-    isAvailable: true,
+    // isAvailable: true,
   },
 ];
 

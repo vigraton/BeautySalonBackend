@@ -1,5 +1,4 @@
 export interface Timetable {
-  // id?: string
   time: string
-  isAvailable: boolean
+  isAvailable?: boolean
 }

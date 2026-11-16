@@ -19,9 +19,7 @@ const stylistSchema = z.object({
 
 const scheduleSchema = z.object({
   day: z.iso.date().nonempty("Escolha uma data"),
-  time: z.iso.time({ precision: -1 }).nonempty("Escolha um horário"),  
-  isAvailable: z.boolean().default(true), // isso não parece fazer sentido, pq... o usuária teria de mandar se está disponível ou não? nada a ver
-  stylist_id: z.string(),
+  time: z.iso.time({ precision: -1 }).nonempty("Escolha um horário"),
 });
 
 const userDetailsSchemas = z.object({
