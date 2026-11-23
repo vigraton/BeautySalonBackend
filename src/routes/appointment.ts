@@ -6,7 +6,7 @@ import {
   type AppointmentSchema,
 } from "../schemas/appointment.js";
 
-export function AppointmentRoutes(app: FastifyInstance) {
+export function AppointmentRoute(app: FastifyInstance) {
   const service = new AppointmentUsecase();
   const controller = new AppointmentController(service);
 

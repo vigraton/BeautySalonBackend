@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { TimetableUsecase } from "../usecases/timetable.js";
 import { TimetableController } from "../controllers/timetable.js";
 
-export function TimetableRoutes(app: FastifyInstance) {
+export function TimetableRoute(app: FastifyInstance) {
   const service = new TimetableUsecase();
   const controller = new TimetableController(service);
 
