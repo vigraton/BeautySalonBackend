@@ -37,17 +37,6 @@ export default class AppointmentUsecase {
       },
     });
 
-    const findDuplicate = await prisma.appointment.findFirst({
-      // where: { id: true },
-    });
-
-    if (findDuplicate) {
-      console.error("[APPOINTMENT] Duplicate appointment found");
-      throw ResponseHandler.toError(409, {
-        error: "Este dia, horário e profissional não estão disponíveis",
-      });
-    }
-
     return ResponseHandler.toSuccess(201, {
       message: "Agendamento criado!",
       createdBooking,
