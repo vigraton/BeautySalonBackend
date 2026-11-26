@@ -1,7 +1,7 @@
 import type { Timetable } from "../types/timetable.js";
 import ResponseHandler from "../utils/response-handler.js";
 
-const timetable: Timetable[] = [
+export const timetable: Timetable[] = [
   {
     time: "09:00",
   },

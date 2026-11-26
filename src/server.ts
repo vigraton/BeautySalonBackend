@@ -6,22 +6,24 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { AppointmentRoutes } from "./routes/appointment.js";
-import { ServiceRoutes } from "./routes/services.js";
-import { StylistRoutes } from "./routes/stylists.js";
-import { TimetableRoutes } from "./routes/timetable.js";
+import { AppointmentRoute } from "./routes/appointment.js";
+import { ServiceRoute } from "./routes/services.js";
+import { StylistRoute } from "./routes/stylists.js";
+import { TimetableRoute } from "./routes/timetable.js";
+import { AvailabilityRoute } from "./routes/availability.js";
 
 const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-await app.register(corsPlugin)
+await app.register(corsPlugin);
 
-app.register(AppointmentRoutes, { prefix: "/appointments" });
-app.register(ServiceRoutes, { prefix: "/services" });
-app.register(StylistRoutes, { prefix: "/stylists" });
-app.register(TimetableRoutes, {prefix: "/timetable"})
+app.register(AppointmentRoute, { prefix: "/appointments" });
+app.register(ServiceRoute, { prefix: "/services" });
+app.register(StylistRoute, { prefix: "/stylists" });
+app.register(TimetableRoute, { prefix: "/timetable" });
+app.register(AvailabilityRoute, {prefix: "/availability"})
 
 async function start() {
   try {
