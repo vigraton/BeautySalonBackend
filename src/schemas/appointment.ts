@@ -1,5 +1,6 @@
 import type { FastifySchema } from "fastify";
 import { z } from "zod";
+import { timetable } from "../usecases/timetable.js";
 
 const serviceSchema = z.object({
   id: z.string().nonempty(),
@@ -16,7 +17,7 @@ const stylistSchema = z.object({
   description: z.string().nonempty(),
 });
 
-const dateTimeSchema = z.object({
+const scheduleSchema = z.object({
   day: z.iso.date().nonempty("Escolha uma data"),
   time: z.iso.time({ precision: -1 }).nonempty("Escolha um horário"),
 });
@@ -31,7 +32,7 @@ const userDetailsSchemas = z.object({
 const appointmentSchema = z.object({
   step1: serviceSchema.pick({ id: true }),
   step2: stylistSchema.pick({ id: true }),
-  step3: dateTimeSchema,
+  step3: scheduleSchema,
   step4: userDetailsSchemas,
 });
 
@@ -47,7 +48,7 @@ const FASTIFY_CREATE_APPOINTMENT_SCHEMA = {
 
 type Step1 = z.infer<typeof serviceSchema>;
 type Step2 = z.infer<typeof stylistSchema>;
-type Step3 = z.infer<typeof dateTimeSchema>;
+type Step3 = z.infer<typeof scheduleSchema>;
 type Step4 = z.infer<typeof userDetailsSchemas>;
 type AppointmentSchema = z.infer<typeof appointmentSchema>;
 
@@ -56,7 +57,7 @@ export {
   type Step1,
   stylistSchema,
   type Step2,
-  dateTimeSchema,
+  scheduleSchema,
   type Step3,
   userDetailsSchemas,
   type Step4,
